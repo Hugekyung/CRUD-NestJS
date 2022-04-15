@@ -23,7 +23,10 @@ networks:
 
 <br/>
 
-`### Prisma 초기 세팅 & 사용법`
+## `### Prisma 초기 세팅 & 사용법`
+
+Prisma를 쓰면 기존에 TypeORM을 사용하기 위해 모델별 Entity 파일을 생성하고 관리했던 방식을 피할 수 있다.
+schema.prisma 파일 내부에 db 연결, model(table) 스키마 작성을 graphQL 방식으로 한번에 작성할 수 있다.
 
 ```
 # prisma 설치
