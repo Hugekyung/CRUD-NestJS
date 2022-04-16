@@ -8,12 +8,13 @@ export class AuthController {
 
   @Post('signup')
   signup(@Req() req: Request) {
-    console.log(req);
+    console.log(req.body);
     return this.authService.signup();
   }
 
   @Post('signin')
-  signin() {
+  signin(@Req() req: Request) {
+    console.log(req.body);
     return this.authService.signin();
   }
 }
