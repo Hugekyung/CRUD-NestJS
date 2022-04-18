@@ -6,6 +6,7 @@ import * as argon from 'argon2';
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}
+
   async signup(dto: AuthDto) {
     const hash = await argon.hash(dto.password);
 
@@ -27,7 +28,23 @@ export class AuthService {
     }
   }
 
-  signin() {
-    return { message: 'Sign In !' }; // json 형식으로 응답한다
+  async signin(dto: AuthDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+      },
+    });
+
+    if (!user) {
+      throw new ForbiddenException('There is no user that matched');
+    }
+
+    const isMatched = await argon.verify(user.hash, dto.password);
+    if (!isMatched) {
+      throw new ForbiddenException('Doesn`t matched password');
+    }
+
+    delete user.hash;
+    return user; // json 형식으로 응답한다
   }
 }
